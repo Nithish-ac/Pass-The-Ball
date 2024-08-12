@@ -75,17 +75,18 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
     {
         var data = new NetworkInputData();
 
+        // Capture player movement input
         if (Input.GetKey(KeyCode.W))
-            data.direction += Vector3.forward;
-
-        if (Input.GetKey(KeyCode.S))
-            data.direction += Vector3.back;
+            data.moveDirection += Vector3.forward;
 
         if (Input.GetKey(KeyCode.A))
-            data.direction += Vector3.left;
+            data.moveDirection += Vector3.left;
 
         if (Input.GetKey(KeyCode.D))
-            data.direction += Vector3.right;
+            data.moveDirection += Vector3.right;
+
+        // Capture action input (e.g., kicking)
+        data.isKicking = Input.GetKey(KeyCode.Space);
 
         input.Set(data);
     }
