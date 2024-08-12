@@ -2104,6 +2104,8 @@ GameObject:
   - component: {fileID: 1699146562268876911}
   - component: {fileID: 6743416697551044096}
   - component: {fileID: 3383966632015442336}
+  - component: {fileID: 5451161119269639992}
+  - component: {fileID: -1574871212854033889}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2210,6 +2212,44 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 6743416697551044096}
+  - {fileID: 5451161119269639992}
+  - {fileID: -1574871212854033889}
+--- !u!114 &5451161119269639992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8380000224312689698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 3338927053410314890}
+  TotalWords: 2
+  ApplyTiming: 2
+  SyncSettings: 79
+  StateHashes: 000000003b70e7be692a98978a18fce4b9abd9d3
+  TriggerHashes: 000000003b70e7be
+--- !u!114 &-1574871212854033889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8380000224312689698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: -9.81
+  jumpImpulse: 8
+  acceleration: 10
+  braking: 10
+  maxSpeed: 5
+  rotationSpeed: 15
 --- !u!1 &8426915784717344155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,7 +2522,7 @@ GameObject:
   - component: {fileID: 1971190819371955849}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

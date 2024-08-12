@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
 {
     private NetworkRunner networkRunner;
-
+    [SerializeField]
+    private GameObject _player;
     private void Start()
     {
         // Initialize the NetworkRunner
@@ -30,6 +31,7 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
 
     private void StartGame(GameMode gameMode, string roomName)
     {
+        networkRunner.ProvideInput = true;
         networkRunner.StartGame(new StartGameArgs()
         {
             GameMode = gameMode,
@@ -45,7 +47,7 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
     private void HandlePlayerJoined()
     {
         // Check if there are more than 1 player
-        if (networkRunner.ActivePlayers.ToList().Count > 1)
+        if (networkRunner.ActivePlayers.ToList().Count > 0)
         {
             UIManager.Instance.ShowOnGameUI();
         }
@@ -55,16 +57,12 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
         UIManager.Instance.ShowWaitingPanel();
     }
 
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-    }
-
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-    }
-
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        if(runner.IsServer)
+        {
+            runner.Spawn(_player,Vector3.zero,Quaternion.identity,player);
+        }
         Debug.Log("playerJoined");
         HandlePlayerJoined();
     }
@@ -73,8 +71,30 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
     {
 
     }
-
     public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        var data = new NetworkInputData();
+
+        if (Input.GetKey(KeyCode.W))
+            data.direction += Vector3.forward;
+
+        if (Input.GetKey(KeyCode.S))
+            data.direction += Vector3.back;
+
+        if (Input.GetKey(KeyCode.A))
+            data.direction += Vector3.left;
+
+        if (Input.GetKey(KeyCode.D))
+            data.direction += Vector3.right;
+
+        input.Set(data);
+    }
+    #region Unwanted Callbacks
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    {
+    }
+
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
     }
 
@@ -145,4 +165,5 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
     {
 
     }
+    #endregion
 }

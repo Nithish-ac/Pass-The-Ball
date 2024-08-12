@@ -8,12 +8,12 @@ public class ThirdPersonController : NetworkBehaviour
     public float rotationSpeed = 720f;
     public Transform cameraTransform;
 
-    private CharacterController characterController;
+    private NetworkCharacterController characterController;
     private Animator animator;
 
-    private void Start()
+    public override void Spawned()
     {
-        characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<NetworkCharacterController>();
         animator = GetComponent<Animator>();
 
         if (Object.HasInputAuthority)
@@ -22,7 +22,7 @@ public class ThirdPersonController : NetworkBehaviour
         }
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         if (!Object.HasInputAuthority) return;
 
@@ -36,8 +36,8 @@ public class ThirdPersonController : NetworkBehaviour
         // Vertical input for forward/backward movement
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 moveDirection = transform.forward * verticalInput;
-
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+        Debug.Log("verticalInput"+ verticalInput);
+        characterController.Move(moveDirection * moveSpeed * Runner.DeltaTime);
 
         // Update Animator Speed parameter for the blend tree
         float speed = moveDirection.magnitude * moveSpeed;
@@ -48,7 +48,8 @@ public class ThirdPersonController : NetworkBehaviour
     {
         // Horizontal input for rotation
         float horizontalInput = Input.GetAxis("Horizontal");
-        Vector3 rotation = new Vector3(0, horizontalInput * rotationSpeed * Time.deltaTime, 0);
+        Debug.Log("Horizontal Input" + horizontalInput);
+        Vector3 rotation = new Vector3(0, horizontalInput * rotationSpeed * Runner.DeltaTime, 0);
 
         transform.Rotate(rotation);
     }

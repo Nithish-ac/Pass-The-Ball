@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenuPanel;
     public GameObject waitingPanel;
     public GameObject onGameUIPanel;
-
+    public GameObject _Camera;
     public Button createRoomButton;
     public Button joinRoomButton;
     public TMP_InputField roomNameInputField;
@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowOnGameUI()
     {
+        _Camera.SetActive(false);
         mainMenuPanel.SetActive(false);
         waitingPanel.SetActive(false);
         onGameUIPanel.SetActive(true);

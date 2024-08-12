@@ -1060,6 +1060,7 @@ MonoBehaviour:
   mainMenuPanel: {fileID: 1123089994}
   waitingPanel: {fileID: 449419940}
   onGameUIPanel: {fileID: 1478503506}
+  _Camera: {fileID: 1253172026}
   createRoomButton: {fileID: 2110282063}
   joinRoomButton: {fileID: 1976570155}
   roomNameInputField: {fileID: 134573195}
@@ -1595,7 +1596,7 @@ GameObject:
   - component: {fileID: 1524345496}
   - component: {fileID: 1524345497}
   m_Layer: 0
-  m_Name: NetworkObject
+  m_Name: NetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1628,6 +1629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432fe7ec4523f004db110cd6b7b5673b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 8380000224312689698, guid: 6d61e7b35caa05f40ad5cc384c80642d, type: 3}
 --- !u!1 &1625726843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2112,9 +2114,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1253172030}
   - {fileID: 1899081265}
   - {fileID: 6523570376611403309}
   - {fileID: 1055580507}
   - {fileID: 859885083}
-  - {fileID: 1253172030}
   - {fileID: 1524345496}
