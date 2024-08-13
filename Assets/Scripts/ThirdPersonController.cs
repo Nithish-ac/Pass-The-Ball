@@ -1,12 +1,16 @@
-
 using UnityEngine;
 using Fusion;
+using Fusion.Addons.Physics;
 
 public class ThirdPersonController : NetworkBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 100f;
     public Transform cameraTransform;
+
+    public float kickForce = 1f;
+    private GameObject ball;
+    private bool hasBall = false;
 
     private NetworkCharacterController characterController;
     private Animator animator;
@@ -39,38 +43,42 @@ public class ThirdPersonController : NetworkBehaviour
             {
                 transform.Rotate(Vector3.up, inputData.moveDirection.x * rotationSpeed * Runner.DeltaTime);
             }
+
+            // Handle Kick Animation
+            if (inputData.isKicking)
+            {
+                KickBall();
+            }
+            else
+            {
+                animator.ResetTrigger("Kick");
+
+            }
         }
     }
-
-    //private void HandleMovement()
-    //{
-    //    // Vertical input for forward/backward movement
-    //    float verticalInput = Input.GetAxis("Vertical");
-    //    Vector3 moveDirection = transform.forward * verticalInput;
-    //    Debug.Log("verticalInput"+ verticalInput);
-    //    characterController.Move(moveDirection * moveSpeed * Runner.DeltaTime);
-
-    //    // Update Animator Speed parameter for the blend tree
-    //    float speed = moveDirection.magnitude * moveSpeed;
-    //    animator.SetFloat("Speed", speed);
-    //}
-
-    //private void HandleRotation()
-    //{
-    //    // Horizontal input for rotation
-    //    float horizontalInput = Input.GetAxis("Horizontal");
-    //    Debug.Log("Horizontal Input" + horizontalInput);
-    //    Vector3 rotation = new Vector3(0, horizontalInput * rotationSpeed * Runner.DeltaTime, 0);
-
-    //    transform.Rotate(rotation);
-    //}
-
-    //private void HandleKick()
-    //{
-    //    // Trigger Kick animation with a key press (e.g., Space key)
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        animator.SetTrigger("Kick");
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ball"))
+        {
+            hasBall = true;
+            ball = other.gameObject;
+            // Remove all forces from the ball
+            NetworkRigidbody3D ballRb = ball.GetComponent<NetworkRigidbody3D>();
+            ballRb.Rigidbody.velocity = Vector3.zero;
+            ballRb.Rigidbody.angularVelocity = Vector3.zero;
+            ballRb.Rigidbody.isKinematic = true;
+            // Attach the ball to the player
+            ball.transform.SetParent(transform);
+            ball.transform.localPosition = new Vector3(0, 0.2f, 1); // Position the ball in front of the player
+        }
+    }
+    private void KickBall()
+    {
+        hasBall = false;
+        ball.transform.SetParent(null);
+        NetworkRigidbody3D ballRb = ball.GetComponent<NetworkRigidbody3D>();
+        ballRb.Rigidbody.isKinematic=false;
+        ballRb.Rigidbody.AddForce(transform.forward * kickForce, ForceMode.Impulse);
+        animator.SetTrigger("Kick");
+    }
 }

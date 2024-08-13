@@ -87,7 +87,6 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
 
         // Capture action input (e.g., kicking)
         data.isKicking = Input.GetKey(KeyCode.Space);
-
         input.Set(data);
     }
     #region Unwanted Callbacks

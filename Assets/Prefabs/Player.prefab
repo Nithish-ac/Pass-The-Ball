@@ -2106,6 +2106,7 @@ GameObject:
   - component: {fileID: 3383966632015442336}
   - component: {fileID: 5451161119269639992}
   - component: {fileID: -1574871212854033889}
+  - component: {fileID: 7983257829424505485}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2194,6 +2195,7 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 100
   cameraTransform: {fileID: 4887385976661922125}
+  kickForce: 1
 --- !u!114 &3383966632015442336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,6 +2252,27 @@ MonoBehaviour:
   braking: 10
   maxSpeed: 5
   rotationSpeed: 15
+--- !u!65 &7983257829424505485
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8380000224312689698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8426915784717344155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2535,13 +2558,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9152359246755795040}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0, y: 1.5, z: -1.63}
+  m_LocalRotation: {x: 0.23565248, y: -0.12678562, z: 0.03102425, w: 0.96303207}
+  m_LocalPosition: {x: 0.5, y: 2.5, z: -1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8377496092947396766}
-  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 27.5, y: -15, z: 0}
 --- !u!20 &6446958186399272463
 Camera:
   m_ObjectHideFlags: 0
