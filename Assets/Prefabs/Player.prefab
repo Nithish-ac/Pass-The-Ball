@@ -2195,7 +2195,7 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 100
   cameraTransform: {fileID: 4887385976661922125}
-  kickForce: 1
+  kickForce: 10
 --- !u!114 &3383966632015442336
 MonoBehaviour:
   m_ObjectHideFlags: 0

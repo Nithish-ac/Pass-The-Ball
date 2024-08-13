@@ -8,8 +8,8 @@ public class ThirdPersonController : NetworkBehaviour
     public float rotationSpeed = 100f;
     public Transform cameraTransform;
 
-    public float kickForce = 1f;
-    private GameObject ball;
+    public float kickForce = 10f;
+    private BallController ballController;
     private bool hasBall = false;
 
     private NetworkCharacterController characterController;
@@ -60,25 +60,24 @@ public class ThirdPersonController : NetworkBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            hasBall = true;
-            ball = other.gameObject;
-            // Remove all forces from the ball
-            NetworkRigidbody3D ballRb = ball.GetComponent<NetworkRigidbody3D>();
-            ballRb.Rigidbody.velocity = Vector3.zero;
-            ballRb.Rigidbody.angularVelocity = Vector3.zero;
-            ballRb.Rigidbody.isKinematic = true;
-            // Attach the ball to the player
-            ball.transform.SetParent(transform);
-            ball.transform.localPosition = new Vector3(0, 0.2f, 1); // Position the ball in front of the player
+            ballController = other.GetComponent<BallController>();
+            if (ballController != null)
+            {
+                hasBall = true;
+                ballController.SetHeld(true, transform); // Set the ball as held by this player
+            }
         }
     }
+
     private void KickBall()
     {
-        hasBall = false;
-        ball.transform.SetParent(null);
-        NetworkRigidbody3D ballRb = ball.GetComponent<NetworkRigidbody3D>();
-        ballRb.Rigidbody.isKinematic=false;
-        ballRb.Rigidbody.AddForce(transform.forward * kickForce, ForceMode.Impulse);
-        animator.SetTrigger("Kick");
+        if (hasBall && ballController != null)
+        {
+            hasBall = false;
+            ballController.SetHeld(false); // Release the ball
+            ballController.ApplyKickForce(transform.forward * kickForce); // Apply the kick force
+            animator.SetTrigger("Kick");
+            ballController = null; // Clear the reference
+        }
     }
 }

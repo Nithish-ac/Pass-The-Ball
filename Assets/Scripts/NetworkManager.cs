@@ -13,6 +13,10 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
     private NetworkRunner networkRunner;
     [SerializeField]
     private GameObject _player;
+    [SerializeField]
+    private GameObject _ball;
+
+    private bool _ballSpawned;
     private void Start()
     {
         // Initialize the NetworkRunner
@@ -62,6 +66,11 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
         if(runner.IsServer)
         {
             runner.Spawn(_player,Vector3.zero,Quaternion.identity,player);
+            if (!_ballSpawned)
+            {
+                _ballSpawned = true;
+                runner.Spawn(_ball, Vector3.forward, Quaternion.identity, player);
+            }
         }
         Debug.Log("playerJoined");
         HandlePlayerJoined();
@@ -69,7 +78,6 @@ public class NetworkManager : MonoBehaviour,INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
